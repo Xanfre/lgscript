@@ -873,13 +873,13 @@ int DarkUIService::TextMessage(luax::Handle L)
 	luax::State S(L);
 	DarkUISrv.set(g_pScriptManager);
 	const char * arg1 = S.checkString(1,NULL);
-	int arg2 = S.optInteger(2,-1001);
-	int arg3;
-	if (S.getType(3) == luax::TString)
-		arg3 = strtocolor(S.asString(3));
+	int arg2;
+	if (S.getType(2) == luax::TString)
+		arg2 = strtocolor(S.asString(2));
 	else
-		arg3 = S.optInteger(3);
-	DarkUISrv->TextMessage(arg1,arg3,arg2);
+		arg2 = S.optInteger(2);
+	int arg3 = S.optInteger(3,-1001);
+	DarkUISrv->TextMessage(arg1,arg2,arg3);
 	return 0;
 }
 int DarkUIService::ReadBook(luax::Handle L)

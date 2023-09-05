@@ -400,7 +400,9 @@ int ScriptMessage::getEnumeratedField(Handle L)
 
 const ScriptMessage::MetafieldDef ScriptMessage::ScrMsgFields[] = {
 	{"from", getObjectField, offsetof(sScrMsg,from), NULL},
+	{"From", getObjectField, offsetof(sScrMsg,from), NULL},
 	{"to", getObjectField, offsetof(sScrMsg,to), NULL},
+	{"To", getObjectField, offsetof(sScrMsg,to), NULL},
 	{"message", getStringField, offsetof(sScrMsg,message), NULL},
 	{"time", getIntegerField, offsetof(sScrMsg,time), NULL},
 	{"flags", getIntegerField, offsetof(sScrMsg,flags), NULL},
