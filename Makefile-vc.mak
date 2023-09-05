@@ -125,14 +125,14 @@ LUAX_SRCS = $(srcdir)\luax.cpp $(srcdir)\luax.h $(srcdir)\luax.hpp
 LUAX_OBJ = $(bindir)\luax.obj
 LUAX_OBJ2 = $(bindir)\luax2.obj
 
-DEFINES = -D_CRT_SECURE_NO_WARNINGS
+DEFINES = -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE -D_NEWDARK
 GAME1 = -D_DARKGAME=1
 GAME2 = -D_DARKGAME=2
 GAME3 = -D_DARKGAME=3
 
 !ifdef DEBUG
 DEFINES = $(DEFINES) -DDEBUG=1
-CXXDEBUG = -MTd -Od
+CXXDEBUG = -MDd -Od
 LDDEBUG = -DEBUG
 LGLIB = $(LGDIR)\lg-d.lib
 SCR1LIB = $(SCRLIBDIR)\ScriptLib1-d.lib
@@ -141,7 +141,7 @@ SCR3LIB = $(SCRLIBDIR)\ScriptLib3-d.lib
 LUADEBUG = -DLUA_USE_APICHECK -DLUA_DEBUG
 !else
 DEFINES = $(DEFINES) -DNDEBUG
-CXXDEBUG = -MT -O2
+CXXDEBUG = -MD -O2
 LDDEBUG = -RELEASE
 LGLIB = $(LGDIR)\lg.lib
 SCR1LIB = $(SCRLIBDIR)\ScriptLib1.lib
@@ -217,7 +217,7 @@ SHELL_OBJS = $(bindir)\LgShell.obj $(bindir)\shell.res
 all: $(bindir) lgs.osm lgscript.exe
 
 clean:
-	-del /y /q $(bindir)\*.*
+	del /q lgs.osm lgscript.exe $(bindir)\*.* *.lib *.exp *.manifest
 
 $(bindir):
 	mkdir $@
@@ -385,7 +385,7 @@ $(bindir)\lext.obj: $(LUAMOD)\lext.c \
 
 $(bindir)\lauxlib1.obj: $(LUADIR)\lauxlib.c \
 		$(LUADIR)\lua.h $(LUADIR)\luaconf.h $(LUADIR)\lauxlib.h
-	$(cc) $(LUAFLAGS) $(CXXDEBUG) $(LUADEBUG) $(LUADEF2) $(LUAINC) -Fo$(bindir)\lauxlib1.obj -c $(LUADIR)\lauxlib.c
+	$(cc) $(LUAFLAGS) $(CXXDEBUG) $(LUADEBUG) $(LUADEF2) $(LUAINC) $(DEFINES) -Fo$(bindir)\lauxlib1.obj -c $(LUADIR)\lauxlib.c
 
 $(bindir)\lbaselib1.obj: $(LUADIR)\lbaselib.c \
 		$(LUADIR)\lua.h $(LUADIR)\luaconf.h $(LUADIR)\lauxlib.h $(LUADIR)\lualib.h

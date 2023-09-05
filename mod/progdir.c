@@ -2,6 +2,7 @@
 #include "lauxlib.h"
 
 #include <stdlib.h>
+#include <windef.h>
 
 char progdir[MAX_PATH+1];
 

@@ -109,11 +109,11 @@ void ScriptModule::PostMessage(int iSrc, int iDest, const char* psz,
 		mov  dword ptr [esp+0x1C],eax
 		mov  eax,g_pScriptManager
 		mov  edx,dword ptr [eax]
-		mov  ecx,&data3
+		mov  ecx,data3
 		mov  dword ptr [esp+0x18],ecx
-		mov  ecx,&data2
+		mov  ecx,data2
 		mov  dword ptr [esp+0x14],ecx
-		mov  ecx,&data1
+		mov  ecx,data1
 		mov  dword ptr [esp+0x10],ecx
 		mov  ecx,psz
 		mov  dword ptr [esp+0xC],ecx

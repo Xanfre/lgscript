@@ -1,4 +1,7 @@
-buildno
 bin
+buildno
+*.lib
+*.exp
+*.manifest
 *.osm
 *.exe

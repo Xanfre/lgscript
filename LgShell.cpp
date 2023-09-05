@@ -28,6 +28,14 @@
 #include <string>
 #include <list>
 #include <limits>
+#include <windef.h>
+
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 #define lua_c
 #define LUAX_INLINE
@@ -706,7 +714,7 @@ int LgScriptApp::pMain(Handle _l)
 extern char progdir[MAX_PATH+1];
 
 static void setprogdir (const char* arg0) {
-	char *lb, *ls;
+	const char *lb, *ls;
 	if (arg0 == NULL)
 		return;
 	lb = strrchr(arg0, '\\');

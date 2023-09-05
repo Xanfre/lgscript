@@ -28,8 +28,8 @@ srcdir = .
 bindir = ./bin
 
 LGDIR = ../lg
-SCRLIBDIR = ../ScriptLib
-DH2DIR = ../DH2
+SCRLIBDIR = ../scriptlib
+DH2DIR = ../dh2
 DH2LIB = -ldh2
 
 LUADIR = ./lua
@@ -126,14 +126,24 @@ LUAX_SRCS = $(srcdir)/luax.cpp $(srcdir)/luax.h $(srcdir)/luax.hpp
 LUAX_OBJ = $(bindir)/luax.o
 LUAX_OBJ2 = $(bindir)/luax2.o
 
+TARGET ?=
+ifeq ($(TARGET),)
 CC = gcc
 CXX = g++
 AR = ar
 LD = g++
 DLLTOOL = dlltool
 RC = windres
+else
+CC = $(TARGET)-gcc
+CXX = $(TARGET)-g++
+AR = $(TARGET)-ar
+LD = $(TARGET)-g++
+DLLTOOL = $(TARGET)-dlltool
+RC = $(TARGET)-windres
+endif
 
-DEFINES = -DWINVER=0x0400 -D_WIN32_WINNT=0x0400 -DWIN32_LEAN_AND_MEAN
+DEFINES = -DWINVER=0x0400 -D_WIN32_WINNT=0x0400 -DWIN32_LEAN_AND_MEAN -D_NEWDARK
 GAME1 = -D_DARKGAME=1
 GAME2 = -D_DARKGAME=2
 GAME3 = -D_DARKGAME=3
@@ -150,7 +160,7 @@ LUADEBUG = -DLUA_USE_APICHECK -DLUA_DEBUG
 else
 DEFINES := $(DEFINES) -DNDEBUG
 CXXDEBUG = -O2
-LDDEBUG =
+LDDEBUG = -Wl,--strip-all
 LGLIB = -llg
 SCR1LIB = -lScript1
 SCR2LIB = -lScript2
@@ -158,7 +168,7 @@ SCR3LIB = -lScript3
 endif
 
 ARFLAGS = rc
-LDFLAGS = -mwindows -mdll -Wl,--enable-auto-image-base
+LDFLAGS = -mwindows -mdll -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base
 LIBDIRS = -L. -L$(LGDIR) -L$(SCRLIBDIR) -L$(DH2DIR)
 LIBS = $(DH2LIB) $(LGLIB) -luuid
 INCLUDES = -I$(srcdir) $(LUAINC) -I$(LGDIR) -I$(SCRLIBDIR) -I$(DH2DIR)
@@ -248,7 +258,7 @@ lgs.osm: $(LGS_OBJS) $(OSM_OBJS) $(RES_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ1)
 	$(LD) $(LDFLAGS) -Wl,--image-base=0x11600000 $(LDDEBUG) $(LIBDIRS) -o $@ $^ $(LIBS)
 
 lgscript.exe: $(SHELL_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ2)
-	$(CXX) $(LDDEBUG) -o $@ $^
+	$(CXX) $(LDDEBUG) -static-libgcc -static-libstdc++ -o $@ $^
 
 $(bindir)/LgShell.o: $(srcdir)/LgShell.cpp $(LUAX)
 	$(CXX) $(LUAFLAGS) $(CXXDEBUG) $(LUADEBUG) $(LUADEF2) $(LUAINC) -o $@ -c $(srcdir)/LgShell.cpp

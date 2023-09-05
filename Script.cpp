@@ -58,7 +58,11 @@ STDMETHODIMP cScript::ReceiveMessage(sScrMsg* pMsg, sMultiParm*, eScrTraceAction
 	{
 		g_pfnMPrintf("[%s:%d] Break on message \"%s\" at %d\n",
 			m_szName, m_iObjId, pMsg->message, pMsg->time);
+#ifdef __GNUC__
 		__asm("int 3");
+#else
+		_asm{int 3}
+#endif
 		break;
 	}
 	default:

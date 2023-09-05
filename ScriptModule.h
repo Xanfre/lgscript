@@ -64,7 +64,7 @@ private:
 protected:
 	static const char s_ScriptModuleName[];
 
-	friend Bool ScriptModuleInit(const char*,IScriptMan*,MPrintfProc,IMalloc*,IScriptModule**);
+	friend Bool __declspec(dllexport) __stdcall ScriptModuleInit(const char*,IScriptMan*,MPrintfProc,IMalloc*,IScriptModule**);
 
 public:
 	virtual ~ScriptModule();

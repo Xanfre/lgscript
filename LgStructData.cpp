@@ -24,8 +24,18 @@
 #include "mod/modlib.h"
 #include "utils.h"
 
+#ifdef _MSC_VER
+#define _USE_MATH_DEFINES
+#endif
 #include <cmath>
 #include <cstring>
+
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 using namespace Lgs;
 using namespace luax;
