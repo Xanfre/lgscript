@@ -22,6 +22,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <lg/config.h>
 #include "mod/ctype.h"
 
 static const unsigned char g_cHexTable[] = {
@@ -82,7 +83,7 @@ static int colornamecmp(const void* key, const void* elem)
 
 int strtocolor(const char* str)
 {
-	register const unsigned char* c = reinterpret_cast<const unsigned char*>(str);
+	REGISTER const unsigned char* c = reinterpret_cast<const unsigned char*>(str);
 	if (*c == '#')
 	{
 		if (strlen(reinterpret_cast<const char*>(++c)) < 6)

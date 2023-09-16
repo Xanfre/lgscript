@@ -34,7 +34,7 @@ DH2LIB = -ldh2
 
 LUADIR = ./lua
 LUAMOD = ./mod
-LUAFLAGS = -W -Wall -D_NO_OLDNAMES
+LUAFLAGS = -Wall -Wextra -D_NO_OLDNAMES
 LUADEF = -DLUA_WIN -DLUA_ANSI -DLGSCRIPT
 LUADEF2 = -DLUA_WIN -DLUA_ANSI -DLGSCRIPT -DLUA_NOTERM
 LUADEBUG =
@@ -172,7 +172,7 @@ LDFLAGS = -mwindows -mdll -static-libgcc -static-libstdc++ -Wl,--enable-auto-ima
 LIBDIRS = -L. -L$(LGDIR) -L$(SCRLIBDIR) -L$(DH2DIR)
 LIBS = $(DH2LIB) $(LGLIB) -luuid
 INCLUDES = -I$(srcdir) $(LUAINC) -I$(LGDIR) -I$(SCRLIBDIR) -I$(DH2DIR)
-CXXFLAGS = -W -Wall -masm=intel -Wno-invalid-offsetof -D_NO_OLDNAMES
+CXXFLAGS = -Wall -Wextra -masm=intel -Wno-invalid-offsetof -D_NO_OLDNAMES
 DLLFLAGS = --add-underscore
 DLLDEF = $(srcdir)/script.def
 

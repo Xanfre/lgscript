@@ -231,7 +231,7 @@ const sScrClassDesc* __stdcall ScriptModule::GetNextClass(tScrIter* pIterParam)
 	const sScrClassDesc* pRet = NULL;
 	try
 	{
-		register unsigned int index = *reinterpret_cast<unsigned int*>(pIterParam);
+		REGISTER unsigned int index = *reinterpret_cast<unsigned int*>(pIterParam);
 		if (++index < m_ScriptsArray.size())
 			pRet = &m_ScriptsArray[index];
 		*reinterpret_cast<unsigned int*>(pIterParam) = index;

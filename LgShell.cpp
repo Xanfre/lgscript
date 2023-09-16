@@ -368,6 +368,7 @@ bool LgScriptArgs::collect(void)
 		}
 		case 'o':
 			optimize = true;
+			// fall through
 		case 'c':
 		{
 			compile = true;

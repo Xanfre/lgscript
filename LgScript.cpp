@@ -90,7 +90,8 @@ void LgScript::DisposeRef(void)
 	int iObjId;
 	try
 	{
-		strncpy(szName, Name(), sizeof(szName));
+		strncpy(szName, Name(), sizeof(szName)-1);
+		szName[sizeof(szName)-1] = '\0';
 		iObjId = ObjId();
 		if (m_iLastMsg >= 0)
 			EndScript();

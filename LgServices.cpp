@@ -2393,6 +2393,7 @@ void DarkHookService::DHInit(luax::State& S)
 	case kDH_Uninitialized:
 		if (DarkHookInitializeService(g_pScriptManager, g_pMalloc))
 			break;
+		FALLTHROUGH;
 	case kDH_Failed:
 		S.error("cannot initialize Dark Hook service");
 	}

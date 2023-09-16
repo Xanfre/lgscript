@@ -797,6 +797,7 @@ struct lua_longjmp;
 
 #ifdef loadlib_c
 #define getenv(x)	NULL
+#define envname
 struct lua_State;
 extern void setprogdir (lua_State *L);
 #endif

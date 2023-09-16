@@ -147,11 +147,6 @@ static void codestring (LexState *ls, expdesc *e, TString *s) {
 }
 
 
-static void checkname(LexState *ls, expdesc *e) {
-  codestring(ls, e, str_checkname(ls));
-}
-
-
 static int registerlocalvar (LexState *ls, TString *varname) {
   FuncState *fs = ls->fs;
   Proto *f = fs->f;
