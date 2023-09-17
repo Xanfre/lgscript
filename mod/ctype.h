@@ -66,6 +66,12 @@ extern int lstrncasecmp (const char* s1, const char* s2, size_t n);
 #define toupper(c)	((lc_toupper)[(int)(c)+1])
 #define tolower(c)	((lc_tolower)[(int)(c)+1])
 
+#ifdef strcasecmp
+#undef strcasecmp
+#endif
 #define strcasecmp	lstrcasecmp
+#ifdef strncasecmp
+#undef strncasecmp
+#endif
 #define strncasecmp	lstrncasecmp
 #define strcoll 	lstrcmp

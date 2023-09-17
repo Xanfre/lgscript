@@ -94,7 +94,7 @@ void ScriptMessage::push(sScrMsg* msg)
 		) = msg;
 	int iMsg = m_lua.getTop();
 	const char* pszClass = "";
-#ifdef _MSCOMPAT
+#if _MSCOMPAT
 	if (static_cast<sPersistent*>(msg) != NULL)
 		pszClass = msg->GetName();
 #else

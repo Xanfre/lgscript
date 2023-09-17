@@ -28,6 +28,8 @@
 #include <cstdio>
 #include <io.h>
 
+#include <lg/interface.h>
+#include <lg/scrservices.h>
 #include <lg/malloc.h>
 #include <lg/editor.h>
 
@@ -45,6 +47,7 @@ public:
 
 
 static int __cdecl NullPrintf(const char*, ...);
+static void GetFMizedPath(const char *name, cScrStr& strPath);
 
 IMalloc* g_pMalloc = NULL;
 IScriptMan* g_pScriptManager = NULL;
@@ -58,6 +61,21 @@ ScriptModule  g_ScriptModule;
 static int __cdecl NullPrintf(const char*, ...)
 {
 	return 0;
+}
+
+extern char progdir[MAX_PATH+1];
+
+static void GetFMizedPath(const char *name, cScrStr& strPath)
+{
+	strPath.MakeNull();
+	try
+	{
+		SService<IVersionSrv> pVers(g_pScriptManager);
+		pVers->FMizeRelativePath(name, strPath);
+	}
+	catch (no_interface&)
+	{
+	}
 }
 
 int ScriptModule::MPrintf(const char* pszFormat, ...)
@@ -267,7 +285,13 @@ unsigned long ScriptModule::BuildScripts(void)
 	ScriptFactoryProc pfnFactory = &ScriptFactory;
 	_finddata_t ffdata;
 	char ffpath[FILENAME_MAX];
-	strcpy(ffpath, ".\\scripts\\");
+	cScrStr strScrPath;
+	GetFMizedPath(".\\scripts\\", strScrPath);
+	if (static_cast<const char*>(strScrPath) && !strScrPath.IsEmpty() && strlen(strScrPath) < FILENAME_MAX-1)
+		strcpy(ffpath, strScrPath);
+	else
+		strcpy(ffpath, ".\\scripts\\");
+	strScrPath.Free();
 	strcat(ffpath, "*");
 	int hFFile = _findfirst(ffpath, &ffdata);
 	if (hFFile != -1)
@@ -349,6 +373,12 @@ ScriptModuleInit (const char* pszName,
 
 	if (!g_pScriptManager || !g_pMalloc)
 		return FALSE;
+
+	cScrStr strFMPath;
+	GetFMizedPath(".\\", strFMPath);
+	if (static_cast<const char*>(strFMPath) && !strFMPath.IsEmpty() && strlen(strFMPath) <= MAX_PATH)
+		strcpy(progdir, strFMPath);
+	strFMPath.Free();
 
 	bool bEditor = false;
 	IUnknown* pIFace;
