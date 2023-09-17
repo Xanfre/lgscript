@@ -27,11 +27,18 @@
 #include <cstdarg>
 #include <cstdio>
 #include <io.h>
+#ifdef _MSC_VER
+#include <new>
+#endif
 
 #include <lg/interface.h>
 #include <lg/scrservices.h>
 #include <lg/malloc.h>
 #include <lg/editor.h>
+
+#ifdef _MSC_VER
+namespace std { const nothrow_t nothrow = nothrow_t(); }
+#endif
 
 class cScrClassDesc : public sScrClassDesc
 {
