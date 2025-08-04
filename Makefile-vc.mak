@@ -226,9 +226,11 @@ lgs.osm: $(LGS_OBJS) $(OSM_OBJS) $(RES_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ1)
 	$(link) $(LDFLAGS) $(dlllflags) $(LDDEBUG) -base:0x11400000 $(LIBDIRS) -out:$@ \
 	$(LGS_OBJS) $(OSM_OBJS) $(RES_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ1) \
 	$(LIBS)
+	mt -nologo -manifest lgs.osm.manifest -outputresource:lgs.osm;#1
 
 lgscript.exe: $(SHELL_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ2)
 	$(link) $(LDFLAGS) $(exelflags) $(LDDEBUG) -out:$@ $(SHELL_OBJS) $(LUAX_OBJ) $(LUA_OBJS) $(LUA_OBJ2) $(baselibs)
+	mt -nologo -manifest lgscript.exe.manifest -outputresource:lgscript.exe;#1
 
 $(bindir)\LgShell.obj: $(srcdir)\LgShell.cpp
 	$(cc) $(CXXFLAGS) $(CXXDEBUG) $(LUADEBUG) $(LUADEF2) $(LUAINC) $(DEFINES) -Fo$(bindir)\LgShell.obj -c $(srcdir)\LgShell.cpp
